@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Por qué elegirnos — VitaDev</title>
+<meta name="description" content="Especialización en salud, seguridad desde el diseño, implementación acompañada y soporte cercano: por qué instituciones del NOA eligen VitaDev.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Lora:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-900:#101c33;
+    --navy-800:#16233f;
+    --navy-700:#1e2f52;
+    --blue-500:#4c7fee;
+    --blue-400:#6f97f2;
+    --blue-100:#eaf1ff;
+    --white:#ffffff;
+    --gray-600:#5b6478;
+    --gray-400:#8992a3;
+    --gray-100:#f4f6fa;
+    --line:#e3e8f2;
+    --radius:16px;
+    --maxw:1180px;
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:var(--font-body);
+    color:var(--navy-900);
+    background:var(--white);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:var(--font-display);
+    margin:0;
+    color:var(--navy-900);
+    letter-spacing:-0.01em;
+  }
+  p{margin:0;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--blue-500);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:16px;height:1.5px;background:var(--blue-500);display:inline-block;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:13px 22px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:15px;
+    cursor:pointer;
+    border:1.5px solid transparent;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+    white-space:nowrap;
+  }
+  .btn-primary{background:var(--navy-900);color:var(--white);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(16,28,51,.25);}
+  .btn-ghost{border-color:var(--line);color:var(--navy-900);background:var(--white);}
+  .btn-ghost:hover{border-color:var(--blue-500);color:var(--blue-500);}
+
+  /* NAV */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:12px 28px;max-width:var(--maxw);margin:0 auto;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:700;font-size:19px;}
+  .brand img{height:52px;width:auto;}
+  .navlinks{display:flex;align-items:center;gap:32px;font-size:15px;font-weight:500;color:var(--navy-900);}
+  .navlinks a{opacity:.85;position:relative;padding:4px 0;}
+  .navlinks a:hover{opacity:1;color:var(--blue-500);}
+  .nav-cta{display:flex;align-items:center;gap:18px;}
+  .menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:6px;}
+  .menu-toggle span{display:block;width:22px;height:2px;background:var(--navy-900);margin:5px 0;}
+
+  /* LÍNEA MULTICOLOR PALETA VITADEV */
+  .color-bar{
+    height:4px;
+    width:100%;
+    background:linear-gradient(90deg, #101c33 0%, #1e2f52 35%, #4c7fee 70%, #6f97f2 100%);
+  }
+
+  /* HERO & ANIMACIÓN DE PULSO INFINITA */
+  .hero{
+    position:relative;
+    padding:88px 0 76px;
+    overflow:hidden;
+    background:linear-gradient(180deg,#fbfcff 0%, #ffffff 60%);
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;
+  }
+  .hero h1{font-size:48px;line-height:1.08;font-weight:700;}
+  .hero h1 .accent{color:var(--blue-500);}
+  .hero p.lead{margin-top:20px;font-size:17.5px;color:var(--gray-600);max-width:520px;}
+  .hero-ctas{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap;}
+  .hero-tags{margin-top:36px;display:flex;flex-wrap:wrap;gap:10px;}
+  .tag{
+    font-family:var(--font-mono);font-size:12px;font-weight:600;
+    color:var(--navy-700);background:var(--blue-100);
+    padding:7px 12px;border-radius:8px;letter-spacing:.02em;
+  }
+  
+  .hero-visual{position:relative;height:340px;display:flex;align-items:center;justify-content:center;}
+  .pulse-svg{width:100%;height:100%;overflow:visible;}
+  
+  .pulse-path-bg {
+    fill: none;
+    stroke: #e2e8f0;
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .pulse-path-active {
+    fill: none;
+    stroke: var(--blue-500);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 200 600;
+    stroke-dashoffset: 800;
+    animation: ecgLoop 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    filter: drop-shadow(0px 2px 8px rgba(76, 127, 238, 0.5));
+  }
+
+  .pulse-dot-1 {
+    fill: var(--navy-900);
+    animation: dotGlow 2.4s ease-in-out infinite;
+  }
+
+  .pulse-dot-2 {
+    fill: var(--navy-900);
+    animation: dotGlow 2.4s ease-in-out infinite;
+    animation-delay: 1.2s;
+  }
+
+  @keyframes ecgLoop {
+    0% { stroke-dashoffset: 800; }
+    100% { stroke-dashoffset: 0; }
+  }
+
+  @keyframes dotGlow {
+    0%, 100% { transform: scale(1); opacity: 0.4; }
+    50% { transform: scale(1.4); opacity: 1; }
+  }
+
+  /* TRUST STRIP */
+  .trust{
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    background:var(--gray-100);
+    padding:20px 0;
+  }
+  .trust .wrap{display:flex;flex-wrap:wrap;gap:14px 32px;align-items:center;justify-content:center;}
+  .trust-item{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--gray-600);font-weight:500;}
+
+  section{padding:96px 0;}
+  .section-head{max-width:640px;margin-bottom:52px;}
+  .section-head h2{font-size:34px;margin-top:14px;}
+  .section-head p{margin-top:14px;color:var(--gray-600);font-size:16px;}
+  .section-alt{background:var(--gray-100);}
+
+  /* SERVICIOS */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .card{
+    background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+    padding:28px 26px;transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(16,28,51,.08);}
+  .card-icon{
+    width:44px;height:44px;border-radius:10px;background:var(--blue-100);
+    display:flex;align-items:center;justify-content:center;margin-bottom:18px;
+  }
+  .card h3{font-size:18px;margin-bottom:10px;}
+  .card p{color:var(--gray-600);font-size:14.5px;}
+
+  /* PROYECTOS & LOGOS */
+  .proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+  .proj-card{
+    display:flex;gap:20px;
+    background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+    padding:28px;transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .proj-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(16,28,51,.08);}
+  .proj-logo{
+    flex-shrink:0;width:68px;height:68px;border-radius:16px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .proj-logo img{width:100%;height:100%;object-fit:contain;padding:6px;}
+  .proj-body h3{font-size:18px;margin-bottom:6px;}
+  .proj-tag{
+    font-family:var(--font-mono);font-size:11.5px;font-weight:600;letter-spacing:.04em;
+    text-transform:uppercase;margin-bottom:8px;display:inline-block;
+  }
+  .proj-body p{color:var(--gray-600);font-size:14px;line-height:1.55;}
+
+  /* NOSOTROS */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;}
+  .about-col h3{font-size:15px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--blue-500);margin-bottom:12px;}
+  .about-col p{color:var(--navy-900);font-size:16.5px;line-height:1.65;}
+  .about-col{padding:28px 0;border-top:1.5px solid var(--navy-900);}
+
+  /* POR QUÉ ELEGIRNOS */
+  .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px 44px;margin-top:44px;}
+  .why-item{display:flex;gap:16px;}
+  .why-icon{
+    flex-shrink:0;width:40px;height:40px;border-radius:11px;background:var(--navy-900);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .why-item h4{font-size:16.5px;margin-bottom:6px;}
+  .why-item p{color:var(--gray-600);font-size:14.5px;line-height:1.6;}
+
+  /* TRABAJÁ CON NOSOTROS */
+  .careers{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;}
+  .careers-list{display:flex;flex-direction:column;gap:16px;}
+  .careers-list div{
+    display:flex;align-items:center;gap:12px;font-size:15px;color:var(--navy-900);
+    border-top:1px solid var(--line);padding-top:16px;
+  }
+  .careers-list div:first-child{border-top:1px solid var(--line);}
+
+  /* POLÍTICA DE CALIDAD */
+  .quality-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin-top:8px;}
+  .quality-statement{
+    background:var(--white);border:1.5px solid var(--line);border-left:4px solid var(--blue-500);
+    border-radius:12px;padding:30px 28px;font-size:16px;color:var(--navy-900);line-height:1.75;
+  }
+  .quality-pillars{display:flex;flex-direction:column;gap:20px;}
+  .quality-pillars .pillar{border-top:1px solid var(--line);padding-top:16px;}
+  .quality-pillars .pillar h4{font-size:15.5px;margin-bottom:6px;}
+  .quality-pillars .pillar p{color:var(--gray-600);font-size:14.5px;}
+
+  /* SEGURIDAD */
+  .security{
+    background:var(--navy-900);color:var(--white);border-radius:24px;
+    padding:64px 48px;margin:0 28px;max-width:calc(var(--maxw) - 56px);
+    margin-left:auto;margin-right:auto;
+  }
+  .security .section-head h2, .security .section-head p{color:var(--white);}
+  .security .section-head p{color:#aebbdb;}
+  .sec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:44px;}
+  .sec-item{border-top:1px solid rgba(255,255,255,.18);padding-top:18px;}
+  .sec-item .tag{background:rgba(255,255,255,.08);color:#cfe0ff;}
+  .sec-item h4{color:var(--white);font-size:16px;margin:14px 0 8px;}
+  .sec-item p{color:#aebbdb;font-size:14px;}
+
+  /* CONTACTO */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;}
+  .contact-info h2{font-size:32px;}
+  .contact-info p.lead{margin-top:16px;color:var(--gray-600);font-size:16px;max-width:420px;}
+  .contact-detail{margin-top:28px;display:flex;flex-direction:column;gap:14px;}
+  .contact-detail div{display:flex;align-items:center;gap:10px;font-size:15px;}
+  form{display:flex;flex-direction:column;gap:14px;}
+  .field{display:flex;flex-direction:column;gap:6px;}
+  label{font-size:13px;font-weight:600;color:var(--navy-900);}
+  input,textarea{
+    font-family:var(--font-body);font-size:15px;padding:13px 14px;
+    border:1.5px solid var(--line);border-radius:10px;outline:none;
+    transition:border-color .15s ease;
+  }
+  input:focus,textarea:focus{border-color:var(--blue-500);}
+  textarea{resize:vertical;min-height:110px;}
+  form .btn{margin-top:6px;align-self:flex-start;}
+
+  footer{border-top:none;}
+  .footer-top{background:#FAF6EA;padding:64px 0 44px;}
+  .footer-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:36px;}
+  .footer-col{display:flex;flex-direction:column;gap:12px;}
+  .footer-col h5{
+    font-family:'Lora',Georgia,serif;font-size:19px;font-weight:700;
+    color:var(--navy-900);letter-spacing:0;text-transform:none;margin-bottom:6px;
+  }
+  .footer-col a, .footer-col span{color:#4a5a68;font-size:14.5px;}
+  .footer-col a{color:#1f5c86;transition:color .15s ease;}
+  .footer-col a:hover{color:var(--blue-500);text-decoration:underline;}
+  .foot-brand{display:flex;align-items:center;gap:8px;font-family:'Lora',Georgia,serif;font-weight:700;font-size:19px;color:var(--navy-900);}
+  .foot-brand img{height:36px;width:auto;}
+  .footer-brand-col p{color:#6b6355;font-size:14px;margin-top:6px;max-width:230px;line-height:1.55;}
+  .footer-divider{height:5px;background:linear-gradient(90deg,#E4C067,#C9A227,#E4C067);}
+  .footer-bottom-bar{background:var(--navy-900);}
+  .footer-bottom{
+    padding:20px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;
+  }
+  .footer-bottom small{color:#aeb7ca;font-size:13px;}
+  .footer-social{display:flex;gap:12px;}
+  .footer-social a{
+    width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.25);
+    display:flex;align-items:center;justify-content:center;color:#dfe4ee;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .footer-social a:hover{border-color:#E4C067;color:#E4C067;}
+
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-visual{height:220px;order:-1;}
+    .hero h1{font-size:36px;}
+    .cards{grid-template-columns:1fr 1fr;}
+    .proj-grid{grid-template-columns:1fr;}
+    .about-grid{grid-template-columns:1fr;gap:20px;}
+    .why-grid{grid-template-columns:1fr;gap:28px;}
+    .careers{grid-template-columns:1fr;gap:32px;}
+    .quality-grid{grid-template-columns:1fr;gap:28px;}
+    .sec-grid{grid-template-columns:1fr;}
+    .contact-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:32px;}
+    .navlinks{display:none;}
+    .menu-toggle{display:block;}
+    .security{padding:44px 26px;margin:0 16px;}
+  }
+  @media (max-width:560px){
+    .cards{grid-template-columns:1fr;}
+    section{padding:64px 0;}
+    .hero{padding:56px 0 48px;}
+    .footer-grid{grid-template-columns:1fr;gap:28px;}
+  }
+
+  /* MULTI-PAGE ADDITIONS */
+  .navlinks a.active{color:var(--blue-500);}
+  .navlinks a.active::after{
+    content:"";position:absolute;left:0;right:0;bottom:-3px;height:2px;background:var(--blue-500);
+  }
+  .breadcrumb{
+    font-family:var(--font-mono);font-size:12.5px;color:var(--gray-400);
+    padding:40px 0 0;letter-spacing:.02em;
+  }
+  .breadcrumb a{color:var(--gray-400);}
+  .breadcrumb a:hover{color:var(--blue-500);}
+
+  /* EXPLORA VITADEV (home) */
+  .explore-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px;}
+  .explore-card{
+    background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 24px;display:flex;flex-direction:column;gap:10px;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .explore-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(16,28,51,.08);}
+  .explore-card .card-icon{margin-bottom:2px;}
+  .explore-card h3{font-size:16.5px;}
+  .explore-card p{color:var(--gray-600);font-size:14px;flex:1;}
+  .explore-link{
+    font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--blue-500);
+    letter-spacing:.02em;display:inline-flex;align-items:center;gap:5px;
+  }
+
+  /* CTA BAND (subpages) */
+  .cta-band{
+    background:var(--navy-900);border-radius:24px;margin:96px 28px 0;
+    padding:56px 48px;text-align:center;max-width:calc(var(--maxw) - 56px);
+    margin-left:auto;margin-right:auto;
+  }
+  .cta-band h3{color:var(--white);font-size:26px;font-family:var(--font-display);}
+  .cta-band p{color:#aebbdb;margin-top:10px;font-size:15px;}
+  .cta-band .btn{margin-top:24px;}
+
+  @media (max-width:900px){
+    .explore-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:560px){
+    .explore-grid{grid-template-columns:1fr;}
+    .cta-band{padding:40px 24px;margin:64px 16px 0;}
+  }
+
+  /* MENÚ MÓVIL FUNCIONAL */
+  @media (max-width:900px){
+    .navlinks.mobile-open{
+      display:flex;
+      position:absolute;
+      top:100%;
+      left:0;
+      right:0;
+      background:rgba(255,255,255,.98);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line);
+      flex-direction:column;
+      align-items:flex-start;
+      gap:0;
+      padding:12px 28px 18px;
+      box-shadow:0 12px 25px rgba(16,28,51,.08);
+    }
+    .navlinks.mobile-open a{
+      width:100%;
+      padding:12px 0;
+    }
+    .navlinks.mobile-open a.active::after{display:none;}
+  }
+</style>
+</head>
+<body>
+<header>
+  <nav>
+    <a href="index.html" class="brand">
+      <img src="./vitadev-logo.png" alt="VitaDev">
+    </a>
+    <div class="navlinks">
+      <a href="index.html#servicios">Servicios</a>
+      <a href="proyectos.html">Proyectos</a>
+      <a href="conocenos.html">Conocenos</a>
+      <a href="elegirnos.html" class="active">Por qué elegirnos</a>
+      <a href="seguridad.html">Seguridad</a>
+      <a href="contacto.html">Contacto</a>
+    </div>
+    <div class="nav-cta">
+      <a href="contacto.html" class="btn btn-primary">Agendar una llamada</a>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" type="button"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="color-bar"></div>
+</header>
+<main id="top">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="index.html">Inicio</a> / Por qué elegirnos</div>
+  </div>
+<section id="elegirnos" class="section-alt">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Por qué elegirnos</span>
+        <h2>No tercerizamos lo que no entendemos.</h2>
+        <p>Elegir proveedor de software para tu institución es una decisión de largo plazo. Esto es lo que nos diferencia de una agencia genérica.</p>
+      </div>
+      <div class="why-grid">
+        <div class="why-item">
+          <div class="why-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M9 9h6M9 13h6M9 17h3"/></svg></div>
+          <div>
+            <h4>Especialización en salud</h4>
+            <p>No adaptamos un producto genérico: entendemos flujos clínicos, guardias, obras sociales y matriculación profesional.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg></div>
+          <div>
+            <h4>Seguridad desde el diseño</h4>
+            <p>Control de accesos, trazabilidad y cumplimiento normativo desde el primer día, no como un parche posterior.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <div>
+            <h4>Implementación acompañada</h4>
+            <p>Te acompañamos en la carga inicial, la capacitación del equipo y las primeras semanas de uso real, no solo en la entrega.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h10"/></svg></div>
+          <div>
+            <h4>Soporte cercano</h4>
+            <p>Hablás con quien programó el sistema, no con un call center genérico que reenvía tickets.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <h3>¿Charlamos sobre tu institución?</h3>
+    <p>Contanos tu caso y te contamos cómo podemos acompañarte.</p>
+    <a href="contacto.html" class="btn btn-primary">Hablemos de tu proyecto</a>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-top">
+    <div class="wrap">
+      <div class="footer-grid">
+      <div class="footer-col footer-brand-col">
+        <div class="foot-brand"><img src="./vitadev-logo.png" alt="VitaDev">VitaDev</div>
+        <p>Software a medida para el sistema de salud del Noroeste Argentino.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Empresa</h5>
+        <a href="conocenos.html">Conocenos</a>
+        <a href="#elegirnos">Por qué elegirnos</a>
+        <a href="trabajo.html">Trabajá con nosotros</a>
+        <a href="calidad.html">Política de calidad</a>
+      </div>
+      <div class="footer-col">
+        <h5>Soluciones</h5>
+        <a href="index.html#servicios">Historia Clínica</a>
+        <a href="index.html#servicios">Turnos</a>
+        <a href="index.html#servicios">Telemedicina</a>
+        <a href="index.html#servicios">Integraciones</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contacto</h5>
+        <a href="contacto.html">Formulario de contacto</a>
+        <span>Tucumán, Argentina</span>
+        <a href="mailto:contacto@vitadev.com.ar">contacto@vitadev.com.ar</a>
+        <a href="https://wa.me/5493810000000" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-bottom-bar">
+    <div class="wrap footer-bottom">
+      <small>© 2026 VitaDev. Software para el sector salud del NOA.</small>
+      <div class="footer-social">
+        <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.1 1 2.48 1s2.5 1.12 2.5 2.5zM.22 8.24h4.56V23H.22V8.24zM8.48 8.24h4.37v2.01h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.47 3.04 5.47 6.99V23h-4.55v-6.78c0-1.62-.03-3.7-2.26-3.7-2.26 0-2.61 1.77-2.61 3.59V23H8.48V8.24z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const toggle = document.querySelector('.menu-toggle');
+  const navlinks = document.querySelector('.navlinks');
+
+  if (!toggle || !navlinks) return;
+
+  toggle.addEventListener('click', function () {
+    const open = navlinks.classList.toggle('mobile-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  navlinks.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', function () {
+      navlinks.classList.remove('mobile-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+});
+</script>
+</body>
+</html>

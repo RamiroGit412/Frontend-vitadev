@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VitaDev — Software para el sector salud en el NOA</title>
+<meta name="description" content="VitaDev desarrolla software a medida para hospitales, clínicas, obras sociales y centros de salud del Noroeste Argentino.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Lora:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-900:#101c33;
+    --navy-800:#16233f;
+    --navy-700:#1e2f52;
+    --blue-500:#4c7fee;
+    --blue-400:#6f97f2;
+    --blue-100:#eaf1ff;
+    --white:#ffffff;
+    --gray-600:#5b6478;
+    --gray-400:#8992a3;
+    --gray-100:#f4f6fa;
+    --line:#e3e8f2;
+    --radius:16px;
+    --maxw:1180px;
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:var(--font-body);
+    color:var(--navy-900);
+    background:var(--white);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:var(--font-display);
+    margin:0;
+    color:var(--navy-900);
+    letter-spacing:-0.01em;
+  }
+  p{margin:0;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--blue-500);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:16px;height:1.5px;background:var(--blue-500);display:inline-block;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:13px 22px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:15px;
+    cursor:pointer;
+    border:1.5px solid transparent;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+    white-space:nowrap;
+  }
+  .btn-primary{background:var(--navy-900);color:var(--white);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(16,28,51,.25);}
+  .btn-ghost{border-color:var(--line);color:var(--navy-900);background:var(--white);}
+  .btn-ghost:hover{border-color:var(--blue-500);color:var(--blue-500);}
+
+  /* NAV */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:12px 28px;max-width:var(--maxw);margin:0 auto;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:700;font-size:19px;}
+  .brand img{height:52px;width:auto;}
+  .navlinks{display:flex;align-items:center;gap:32px;font-size:15px;font-weight:500;color:var(--navy-900);}
+  .navlinks a{opacity:.85;position:relative;padding:4px 0;}
+  .navlinks a:hover{opacity:1;color:var(--blue-500);}
+  .nav-cta{display:flex;align-items:center;gap:18px;}
+  .menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:6px;}
+  .menu-toggle span{display:block;width:22px;height:2px;background:var(--navy-900);margin:5px 0;}
+
+  /* LÍNEA MULTICOLOR PALETA VITADEV */
+  .color-bar{
+    height:4px;
+    width:100%;
+    background:linear-gradient(90deg, #101c33 0%, #1e2f52 35%, #4c7fee 70%, #6f97f2 100%);
+  }
+
+  /* HERO & ANIMACIÓN DE PULSO INFINITA */
+  .hero{
+    position:relative;
+    padding:88px 0 76px;
+    overflow:hidden;
+    background:linear-gradient(180deg,#fbfcff 0%, #ffffff 60%);
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;
+  }
+  .hero h1{font-size:48px;line-height:1.08;font-weight:700;}
+  .hero h1 .accent{color:var(--blue-500);}
+  .hero p.lead{margin-top:20px;font-size:17.5px;color:var(--gray-600);max-width:520px;}
+  .hero-ctas{margin-top:32px;display:flex;gap:14px;flex-wrap:wrap;}
+  .hero-tags{margin-top:36px;display:flex;flex-wrap:wrap;gap:10px;}
+  .tag{
+    font-family:var(--font-mono);font-size:12px;font-weight:600;
+    color:var(--navy-700);background:var(--blue-100);
+    padding:7px 12px;border-radius:8px;letter-spacing:.02em;
+  }
+  
+  .hero-visual{position:relative;height:340px;display:flex;align-items:center;justify-content:center;}
+  .pulse-svg{width:100%;height:100%;overflow:visible;}
+  
+  .pulse-path-bg {
+    fill: none;
+    stroke: #e2e8f0;
+    stroke-width: 3.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .pulse-path-active {
+    fill: none;
+    stroke: var(--blue-500);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 200 600;
+    stroke-dashoffset: 800;
+    animation: ecgLoop 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    filter: drop-shadow(0px 2px 8px rgba(76, 127, 238, 0.5));
+  }
+
+  @keyframes ecgLoop {
+    0% { stroke-dashoffset: 800; }
+    100% { stroke-dashoffset: 0; }
+  }
+
+  /* TRUST STRIP */
+  .trust{
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    background:var(--gray-100);
+    padding:20px 0;
+  }
+  .trust .wrap{display:flex;flex-wrap:wrap;gap:14px 32px;align-items:center;justify-content:center;}
+  .trust-item{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--gray-600);font-weight:500;}
+
+  section{padding:96px 0;}
+  .section-head{max-width:640px;margin-bottom:52px;}
+  .section-head h2{font-size:34px;margin-top:14px;}
+  .section-head p{margin-top:14px;color:var(--gray-600);font-size:16px;}
+  .section-alt{background:var(--gray-100);}
+
+  /* SERVICIOS */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .card{
+    background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+    padding:28px 26px;transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(16,28,51,.08);}
+  .card-icon{
+    width:44px;height:44px;border-radius:10px;background:var(--blue-100);
+    display:flex;align-items:center;justify-content:center;margin-bottom:18px;
+  }
+  .card h3{font-size:18px;margin-bottom:10px;}
+  .card p{color:var(--gray-600);font-size:14.5px;}
+
+  /* PROYECTOS & LOGOS */
+  .proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;}
+  .proj-card{
+    display:flex;gap:20px;
+    background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+    padding:28px;transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .proj-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(16,28,51,.08);}
+  .proj-logo{
+    flex-shrink:0;width:68px;height:68px;border-radius:16px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .proj-logo img{width:100%;height:100%;object-fit:contain;padding:6px;}
+  .proj-body h3{font-size:18px;margin-bottom:6px;}
+  .proj-tag{
+    font-family:var(--font-mono);font-size:11.5px;font-weight:600;letter-spacing:.04em;
+    text-transform:uppercase;margin-bottom:8px;display:inline-block;
+  }
+  .proj-body p{color:var(--gray-600);font-size:14px;line-height:1.55;}
+
+  /* NOSOTROS */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;}
+  .about-col h3{font-size:15px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--blue-500);margin-bottom:12px;}
+  .about-col p{color:var(--navy-900);font-size:16.5px;line-height:1.65;}
+  .about-col{padding:28px 0;border-top:1.5px solid var(--navy-900);}
+
+  /* POR QUÉ ELEGIRNOS */
+  .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:36px 44px;margin-top:44px;}
+  .why-item{display:flex;gap:16px;}
+  .why-icon{
+    flex-shrink:0;width:40px;height:40px;border-radius:11px;background:var(--navy-900);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .why-item h4{font-size:16.5px;margin-bottom:6px;}
+  .why-item p{color:var(--gray-600);font-size:14.5px;line-height:1.6;}
+
+  /* TRABAJÁ CON NOSOTROS */
+  .careers{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;}
+  .careers-list{display:flex;flex-direction:column;gap:16px;}
+  .careers-list div{
+    display:flex;align-items:center;gap:12px;font-size:15px;color:var(--navy-900);
+    border-top:1px solid var(--line);padding-top:16px;
+  }
+  .careers-list div:first-child{border-top:1px solid var(--line);}
+
+  /* POLÍTICA DE CALIDAD */
+  .quality-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;margin-top:8px;}
+  .quality-statement{
+    background:var(--white);border:1.5px solid var(--line);border-left:4px solid var(--blue-500);
+    border-radius:12px;padding:30px 28px;font-size:16px;color:var(--navy-900);line-height:1.75;
+  }
+  .quality-pillars{display:flex;flex-direction:column;gap:20px;}
+  .quality-pillars .pillar{border-top:1px solid var(--line);padding-top:16px;}
+  .quality-pillars .pillar h4{font-size:15.5px;margin-bottom:6px;}
+  .quality-pillars .pillar p{color:var(--gray-600);font-size:14.5px;}
+
+  /* SEGURIDAD */
+  .security{
+    background:var(--navy-900);color:var(--white);border-radius:24px;
+    padding:64px 48px;margin:0 28px;max-width:calc(var(--maxw) - 56px);
+    margin-left:auto;margin-right:auto;
+  }
+  .security .section-head h2, .security .section-head p{color:var(--white);}
+  .security .section-head p{color:#aebbdb;}
+  .sec-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:44px;}
+  .sec-item{border-top:1px solid rgba(255,255,255,.18);padding-top:18px;}
+  .sec-item .tag{background:rgba(255,255,255,.08);color:#cfe0ff;}
+  .sec-item h4{color:var(--white);font-size:16px;margin:14px 0 8px;}
+  .sec-item p{color:#aebbdb;font-size:14px;}
+
+  /* CONTACTO */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;}
+  .contact-info h2{font-size:32px;}
+  .contact-info p.lead{margin-top:16px;color:var(--gray-600);font-size:16px;max-width:420px;}
+  .contact-detail{margin-top:28px;display:flex;flex-direction:column;gap:14px;}
+  .contact-detail div{display:flex;align-items:center;gap:10px;font-size:15px;}
+  form{display:flex;flex-direction:column;gap:14px;}
+  .field{display:flex;flex-direction:column;gap:6px;}
+  label{font-size:13px;font-weight:600;color:var(--navy-900);}
+  input,textarea{
+    font-family:var(--font-body);font-size:15px;padding:13px 14px;
+    border:1.5px solid var(--line);border-radius:10px;outline:none;
+    transition:border-color .15s ease;
+  }
+  input:focus,textarea:focus{border-color:var(--blue-500);}
+  textarea{resize:vertical;min-height:110px;}
+  form .btn{margin-top:6px;align-self:flex-start;}
+
+  footer{border-top:none;}
+  .footer-top{background:#FAF6EA;padding:64px 0 44px;}
+  .footer-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:36px;}
+  .footer-col{display:flex;flex-direction:column;gap:12px;}
+  .footer-col h5{
+    font-family:'Lora',Georgia,serif;font-size:19px;font-weight:700;
+    color:var(--navy-900);letter-spacing:0;text-transform:none;margin-bottom:6px;
+  }
+  .footer-col a, .footer-col span{color:#4a5a68;font-size:14.5px;}
+  .footer-col a{color:#1f5c86;transition:color .15s ease;}
+  .footer-col a:hover{color:var(--blue-500);text-decoration:underline;}
+  .foot-brand{display:flex;align-items:center;gap:8px;font-family:'Lora',Georgia,serif;font-weight:700;font-size:19px;color:var(--navy-900);}
+  .foot-brand img{height:36px;width:auto;}
+  .footer-brand-col p{color:#6b6355;font-size:14px;margin-top:6px;max-width:230px;line-height:1.55;}
+  .footer-divider{height:5px;background:linear-gradient(90deg,#E4C067,#C9A227,#E4C067);}
+  .footer-bottom-bar{background:var(--navy-900);}
+  .footer-bottom{
+    padding:20px 0;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;
+  }
+  .footer-bottom small{color:#aeb7ca;font-size:13px;}
+  .footer-social{display:flex;gap:12px;}
+  .footer-social a{
+    width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.25);
+    display:flex;align-items:center;justify-content:center;color:#dfe4ee;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .footer-social a:hover{border-color:#E4C067;color:#E4C067;}
+
+  @media (max-width:900px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-visual{height:220px;order:-1;}
+    .hero h1{font-size:36px;}
+    .cards{grid-template-columns:1fr 1fr;}
+    .proj-grid{grid-template-columns:1fr;}
+    .about-grid{grid-template-columns:1fr;gap:20px;}
+    .why-grid{grid-template-columns:1fr;gap:28px;}
+    .careers{grid-template-columns:1fr;gap:32px;}
+    .quality-grid{grid-template-columns:1fr;gap:28px;}
+    .sec-grid{grid-template-columns:1fr;}
+    .contact-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;gap:32px;}
+    .navlinks{display:none;}
+    .menu-toggle{display:block;}
+    .security{padding:44px 26px;margin:0 16px;}
+  }
+  @media (max-width:560px){
+    .cards{grid-template-columns:1fr;}
+    section{padding:64px 0;}
+    .hero{padding:56px 0 48px;}
+    .footer-grid{grid-template-columns:1fr;gap:28px;}
+  }
+
+  /* MULTI-PAGE ADDITIONS */
+  .navlinks a.active{color:var(--blue-500);}
+  .navlinks a.active::after{
+    content:"";position:absolute;left:0;right:0;bottom:-3px;height:2px;background:var(--blue-500);
+  }
+  .breadcrumb{
+    font-family:var(--font-mono);font-size:12.5px;color:var(--gray-400);
+    padding:40px 0 0;letter-spacing:.02em;
+  }
+  .breadcrumb a{color:var(--gray-400);}
+  .breadcrumb a:hover{color:var(--blue-500);}
+
+  /* EXPLORA VITADEV (home) */
+  .explore-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px;}
+  .explore-card{
+    background:var(--white);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px 24px;display:flex;flex-direction:column;gap:10px;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .explore-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(16,28,51,.08);}
+  .explore-card .card-icon{margin-bottom:2px;}
+  .explore-card h3{font-size:16.5px;}
+  .explore-card p{color:var(--gray-600);font-size:14px;flex:1;}
+  .explore-link{
+    font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--blue-500);
+    letter-spacing:.02em;display:inline-flex;align-items:center;gap:5px;
+  }
+
+  /* CTA BAND (subpages) */
+  .cta-band{
+    background:var(--navy-900);border-radius:24px;margin:96px 28px 0;
+    padding:56px 48px;text-align:center;max-width:calc(var(--maxw) - 56px);
+    margin-left:auto;margin-right:auto;
+  }
+  .cta-band h3{color:var(--white);font-size:26px;font-family:var(--font-display);}
+  .cta-band p{color:#aebbdb;margin-top:10px;font-size:15px;}
+  .cta-band .btn{margin-top:24px;}
+
+  @media (max-width:900px){
+    .explore-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:560px){
+    .explore-grid{grid-template-columns:1fr;}
+    .cta-band{padding:40px 24px;margin:64px 16px 0;}
+  }
+
+
+  /* MENÚ MÓVIL CORREGIDO */
+  @media (max-width:900px){
+    .navlinks.mobile-open{
+      display:flex;
+      position:absolute;
+      top:100%;
+      left:0;
+      right:0;
+      background:rgba(255,255,255,.98);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line);
+      flex-direction:column;
+      align-items:flex-start;
+      gap:0;
+      padding:12px 28px 18px;
+      box-shadow:0 12px 25px rgba(16,28,51,.08);
+    }
+    .navlinks.mobile-open a{
+      width:100%;
+      padding:12px 0;
+    }
+    .navlinks.mobile-open a.active::after{display:none;}
+  }
+
+</style>
+</head>
+<body>
+<header>
+  <nav>
+    <a href="index.html" class="brand" aria-label="Volver al inicio">
+      <img src="./vitadev-logo.png" alt="VitaDev">
+    </a>
+    <div class="navlinks">
+      <a href="#servicios" class="active">Servicios</a>
+      <a href="proyectos.html">Proyectos</a>
+      <a href="conocenos.html">Conocenos</a>
+      <a href="elegirnos.html">Por qué elegirnos</a>
+      <a href="seguridad.html">Seguridad</a>
+      <a href="contacto.html">Contacto</a>
+    </div>
+    <div class="nav-cta">
+      <a href="contacto.html" class="btn btn-primary">Agendar una llamada</a>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" type="button"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="color-bar"></div>
+</header>
+<main id="top">
+<!-- HERO -->
+  <section class="hero" style="padding-top:56px;">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Software para el sector salud · NOA Argentina</span>
+        <h1 style="margin-top:18px;">Tecnología que <span class="accent">conecta</span><br>pacientes, profesionales<br>e instituciones.</h1>
+        <p class="lead">Desarrollamos software a medida para hospitales, clínicas, obras sociales y centros de salud del Noroeste Argentino: sistemas seguros, adaptables y pensados para la atención real, no solo para la planilla.</p>
+        <div class="hero-ctas">
+          <a href="contacto.html" class="btn btn-primary">Hablemos de tu proyecto</a>
+          <a href="#servicios" class="btn btn-ghost">Ver servicios</a>
+        </div>
+        <div class="hero-tags">
+          <span class="tag">Historia clínica electrónica</span>
+          <span class="tag">HL7 FHIR</span>
+          <span class="tag">Ley 25.326</span>
+          <span class="tag">Telemedicina</span>
+        </div>
+      </div>
+      
+      <!-- HERO ANIMACIÓN ECG CONTINUA -->
+      <div class="hero-visual">
+        <svg class="pulse-svg" viewBox="0 0 480 340" xmlns="http://www.w3.org/2000/svg">
+          <path class="pulse-path-bg" d="M 20 220 L 70 220 C 85 220, 80 170, 95 170 C 110 170, 110 260, 125 260 C 135 260, 140 40, 155 40 C 170 40, 175 310, 190 310 C 205 310, 210 150, 225 150 L 255 150 C 270 150, 275 130, 290 130 L 320 130 C 335 130, 340 100, 355 100 L 410 100 L 460 100" />
+          <path class="pulse-path-active" d="M 20 220 L 70 220 C 85 220, 80 170, 95 170 C 110 170, 110 260, 125 260 C 135 260, 140 40, 155 40 C 170 40, 175 310, 190 310 C 205 310, 210 150, 225 150 L 255 150 C 270 150, 275 130, 290 130 L 320 130 C 335 130, 340 100, 355 100 L 410 100 L 460 100" />
+        </svg>
+      </div>
+    </div>
+  </section>
+<div class="trust">
+    <div class="wrap">
+      <span class="trust-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4c7fee" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg>
+        Cumplimiento con la Ley 25.326 de Protección de Datos
+      </span>
+      <span class="trust-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4c7fee" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        Interoperabilidad bajo estándar HL7 FHIR
+      </span>
+      <span class="trust-item">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4c7fee" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12h8M12 8v8"/></svg>
+        Plataforma modular, adaptable a cada institución
+      </span>
+    </div>
+  </div>
+<section id="servicios">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Servicios</span>
+        <h2>Un sistema, todos los procesos de salud.</h2>
+        <p>Módulos independientes que se integran entre sí, para que cada institución use solo lo que necesita — y sume más a medida que crece.</p>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14213D" stroke-width="1.8"><path d="M9 3v4M15 3v4M4 8h16M6 8v11a2 2 0 002 2h8a2 2 0 002-2V8"/><path d="M9 13h6M12 10v6"/></svg></div>
+          <h3>Historia Clínica Electrónica</h3>
+          <p>Centraliza el registro médico del paciente con acceso seguro y trazable desde cualquier punto de atención.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14213D" stroke-width="1.8"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/><circle cx="9" cy="14" r="1.4" fill="#14213D" stroke="none"/><circle cx="14" cy="14" r="1.4" fill="#14213D" stroke="none"/></svg></div>
+          <h3>Gestión de Turnos</h3>
+          <p>Agenda online, recordatorios automáticos y menor ausentismo, integrada a la disponibilidad real de cada profesional.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14213D" stroke-width="1.8"><path d="M8 3h8l1 4H7l1-4z"/><path d="M7 7l-2 13h14L17 7"/><path d="M9.5 13.5h5"/></svg></div>
+          <h3>Recetas Electrónicas</h3>
+          <p>Prescripción digital bajo normativa vigente, con historial de medicación y validación farmacéutica.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14213D" stroke-width="1.8"><circle cx="12" cy="8" r="3.5"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg></div>
+          <h3>Gestión de Pacientes</h3>
+          <p>Ficha unificada, seguimiento de tratamientos y comunicación directa entre paciente e institución.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14213D" stroke-width="1.8"><path d="M15 10l5-3v10l-5-3M4 7h9a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V9a2 2 0 012-2z"/></svg></div>
+          <h3>Telemedicina</h3>
+          <p>Consultas a distancia con videollamada integrada, pensadas para zonas rurales y de difícil acceso del NOA.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#14213D" stroke-width="1.8"><path d="M8 9l-4 3 4 3M16 9l4 3-4 3M13 5l-2 14"/></svg></div>
+          <h3>Integraciones & APIs</h3>
+          <p>Conectamos tu sistema con obras sociales, laboratorios y otras plataformas bajo estándares abiertos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPLORA VITADEV -->
+  <section id="explora" class="section-alt">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Explorá VitaDev</span>
+        <h2>Conocé más sobre cómo trabajamos.</h2>
+        <p>Un recorrido rápido por quiénes somos, qué proyectos hicimos y por qué instituciones del NOA confían en nosotros.</p>
+      </div>
+      <div class="explore-grid">
+        <a href="proyectos.html" style="text-decoration:none;">
+          <div class="explore-card">
+            <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14213D" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+            <h3>Proyectos</h3>
+            <p>Sistemas que ya construimos para clínicas, obras sociales y centros de salud del NOA.</p>
+            <span class="explore-link">Ver proyectos →</span>
+          </div>
+        </a>
+        <a href="conocenos.html" style="text-decoration:none;">
+          <div class="explore-card">
+            <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14213D" stroke-width="1.8"><circle cx="12" cy="8" r="3.5"/><path d="M5 21c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg></div>
+            <h3>Conocenos</h3>
+            <p>Nuestra misión, visión y por qué nacimos pensando en el sistema de salud del NOA.</p>
+            <span class="explore-link">Conocer al equipo →</span>
+          </div>
+        </a>
+        <a href="elegirnos.html" style="text-decoration:none;">
+          <div class="explore-card">
+            <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14213D" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg></div>
+            <h3>Por qué elegirnos</h3>
+            <p>Qué nos diferencia de una agencia genérica de desarrollo.</p>
+            <span class="explore-link">Ver diferenciales →</span>
+          </div>
+        </a>
+        <a href="seguridad.html" style="text-decoration:none;">
+          <div class="explore-card">
+            <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14213D" stroke-width="1.8"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/></svg></div>
+            <h3>Seguridad</h3>
+            <p>Cómo protegemos los datos sensibles de pacientes en cada sistema.</p>
+            <span class="explore-link">Ver cumplimiento →</span>
+          </div>
+        </a>
+        <a href="trabajo.html" style="text-decoration:none;">
+          <div class="explore-card">
+            <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14213D" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg></div>
+            <h3>Trabajá con nosotros</h3>
+            <p>Sumate a un equipo chico con impacto real en la salud del NOA.</p>
+            <span class="explore-link">Ver vacantes →</span>
+          </div>
+        </a>
+        <a href="calidad.html" style="text-decoration:none;">
+          <div class="explore-card">
+            <div class="card-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#14213D" stroke-width="1.8"><path d="M9 3v4M15 3v4M4 8h16M6 8v11a2 2 0 002 2h8a2 2 0 002-2V8"/><path d="M9 13h6M12 10v6"/></svg></div>
+            <h3>Política de calidad</h3>
+            <p>Los principios que guían cada desarrollo que entregamos.</p>
+            <span class="explore-link">Ver política →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-band">
+    <h3>¿Hablamos de tu proyecto?</h3>
+    <p>Contanos qué necesita tu institución y te mostramos cómo podemos ayudarte a digitalizarla.</p>
+    <a href="contacto.html" class="btn btn-primary">Hablemos de tu proyecto</a>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-top">
+    <div class="wrap">
+      <div class="footer-grid">
+      <div class="footer-col footer-brand-col">
+        <div class="foot-brand"><img src="./vitadev-logo.png" alt="VitaDev">VitaDev</div>
+        <p>Software a medida para el sistema de salud del Noroeste Argentino.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Empresa</h5>
+        <a href="conocenos.html">Conocenos</a>
+        <a href="elegirnos.html">Por qué elegirnos</a>
+        <a href="trabajo.html">Trabajá con nosotros</a>
+        <a href="calidad.html">Política de calidad</a>
+      </div>
+      <div class="footer-col">
+        <h5>Soluciones</h5>
+        <a href="#servicios">Historia Clínica</a>
+        <a href="#servicios">Turnos</a>
+        <a href="#servicios">Telemedicina</a>
+        <a href="#servicios">Integraciones</a>
+      </div>
+      <div class="footer-col">
+        <h5>Contacto</h5>
+        <a href="contacto.html">Formulario de contacto</a>
+        <span>Tucumán, Argentina</span>
+        <a href="mailto:contacto@vitadev.com.ar">contacto@vitadev.com.ar</a>
+        <a href="https://wa.me/5493810000000" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-bottom-bar">
+    <div class="wrap footer-bottom">
+      <small>© 2026 VitaDev. Software para el sector salud del NOA.</small>
+      <div class="footer-social">
+        <a href="#" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.1 1 2.48 1s2.5 1.12 2.5 2.5zM.22 8.24h4.56V23H.22V8.24zM8.48 8.24h4.37v2.01h.06c.61-1.15 2.1-2.36 4.32-2.36 4.62 0 5.47 3.04 5.47 6.99V23h-4.55v-6.78c0-1.62-.03-3.7-2.26-3.7-2.26 0-2.61 1.77-2.61 3.59V23H8.48V8.24z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const toggle = document.querySelector('.menu-toggle');
+  const navlinks = document.querySelector('.navlinks');
+
+  if (!toggle || !navlinks) return;
+
+  toggle.addEventListener('click', function () {
+    const open = navlinks.classList.toggle('mobile-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  navlinks.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', function () {
+      navlinks.classList.remove('mobile-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+});
+</script>
+
+</body>
+</html>
