@@ -346,6 +346,11 @@ footer{border-top:none;}
 .breadcrumb a{color:var(--gray-400);}
 .breadcrumb a:hover{color:var(--blue-500);}
 
+/* La primera seccion de las subpaginas arrancaba con los 96px de aire de
+   section{}, encima de los 40px del breadcrumb: 163px de hueco entre el
+   header y el primer texto. El breadcrumb ya separa del header. */
+main > .wrap:first-child + section{padding-top:40px;}
+
 /* EXPLORA VITADEV (home) */
 .explore-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:44px;}
 .explore-card{
