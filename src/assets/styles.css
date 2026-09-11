@@ -251,7 +251,7 @@ section{padding:96px 0;}
 /* SEGURIDAD */
 .security{
   background:var(--navy-900);color:var(--white);border-radius:24px;
-  padding:64px 48px;margin:0 28px;max-width:calc(var(--maxw) - 56px);
+  padding:40px 48px;margin:0 8px;max-width:calc(var(--maxw) - 56px);
   margin-left:auto;margin-right:auto;
 }
 .security .section-head h1, .security .section-head h2, .security .section-head p{color:var(--white);}
