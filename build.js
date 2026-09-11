@@ -1,18 +1,17 @@
 /*
- * build.js — genera las paginas HTML del sitio desde src/
+ * build.js — genera el sitio publicable en dist/ a partir de src/
  *
- * El header y el footer viven en un solo lugar (src/partials/) y se
- * insertan en cada pagina al construir. Antes estaban copiados en los 8
- * archivos, y cada cambio habia que hacerlo 8 veces.
+ * Cada parte del sitio se escribe UNA sola vez en src/ y el build la
+ * combina en las paginas finales. Antes el header y el footer estaban
+ * copiados en los 8 HTML y cada cambio habia que hacerlo 8 veces.
  *
  * Uso:  node build.js            construye una vez
  *       node build.js --watch    queda escuchando y reconstruye al guardar
  *
- * Entrada:  src/partials/*.html  +  src/pages/*.html
- * Salida:   los *.html de la raiz (se sobrescriben)
+ * Entrada:  src/partials/  src/pages/  src/assets/  src/img/
+ * Salida:   dist/  (se regenera completa; no se versiona)
  *
- * No tiene dependencias: solo Node. La salida es HTML estatico plano, asi
- * que el sitio se sigue publicando y abriendo igual que antes.
+ * No tiene dependencias: solo Node. La salida es HTML estatico plano.
  */
 
 const fs = require('fs');
@@ -24,6 +23,9 @@ const WHATSAPP = '5493863409588';
 const raiz = __dirname;
 const dirPartials = path.join(raiz, 'src', 'partials');
 const dirPaginas = path.join(raiz, 'src', 'pages');
+const dirAssets = path.join(raiz, 'src', 'assets');
+const dirImg = path.join(raiz, 'src', 'img');
+const dirSalida = path.join(raiz, 'dist');
 
 const leer = (...p) => fs.readFileSync(path.join(...p), 'utf8');
 
@@ -49,7 +51,24 @@ function marcarActivo(html, href) {
   return html.replace(busca, '<a href="' + href + '" class="active">');
 }
 
-/* Genera los 8 HTML de la raiz. Devuelve cuantos escribio. */
+/* Vacia dist/ sin salirse de la carpeta del proyecto. */
+function limpiarSalida() {
+  if (path.dirname(dirSalida) !== raiz || path.basename(dirSalida) !== 'dist') {
+    throw new Error('dirSalida inesperado, no se borra nada');
+  }
+  fs.rmSync(dirSalida, { recursive: true, force: true });
+  fs.mkdirSync(dirSalida, { recursive: true });
+}
+
+/* Copia una carpeta de src/ dentro de dist/ con el mismo nombre. */
+function copiar(origen, nombre) {
+  if (!fs.existsSync(origen)) return 0;
+  const destino = path.join(dirSalida, nombre);
+  fs.cpSync(origen, destino, { recursive: true });
+  return fs.readdirSync(origen).length;
+}
+
+/* Genera el sitio completo en dist/. */
 function construir({ silencioso = false } = {}) {
   // se leen en cada corrida para que --watch tome los cambios
   const head = leer(dirPartials, 'head.html').trimEnd();
@@ -57,7 +76,9 @@ function construir({ silencioso = false } = {}) {
   const footer = leer(dirPartials, 'footer.html').trimEnd();
 
   const paginas = fs.readdirSync(dirPaginas).filter((f) => f.endsWith('.html')).sort();
-  let escritas = 0;
+  if (paginas.length === 0) throw new Error('no hay paginas en src/pages/');
+
+  limpiarSalida();
 
   for (const archivo of paginas) {
     const { campos, contenido } = parsear(leer(dirPaginas, archivo));
@@ -74,7 +95,7 @@ function construir({ silencioso = false } = {}) {
 
     const salida = [
       '<!DOCTYPE html>',
-      '<!-- ARCHIVO GENERADO por build.js. No editar a mano: se sobrescribe.',
+      '<!-- ARCHIVO GENERADO por build.js. No editar: dist/ se borra en cada build.',
       '     El contenido de esta pagina esta en src/pages/' + archivo,
       '     El header y el footer, en src/partials/ -->',
       '<html lang="es">',
@@ -90,12 +111,14 @@ function construir({ silencioso = false } = {}) {
       '',
     ].join('\n');
 
-    fs.writeFileSync(path.join(raiz, archivo), salida, 'utf8');
-    escritas++;
-    if (!silencioso) console.log('  ' + archivo.padEnd(16) + campos.title);
+    fs.writeFileSync(path.join(dirSalida, archivo), salida, 'utf8');
+    if (!silencioso) console.log('  dist/' + archivo.padEnd(16) + campos.title);
   }
 
-  return escritas;
+  const nAssets = copiar(dirAssets, 'assets');
+  const nImg = copiar(dirImg, 'img');
+
+  return { paginas: paginas.length, assets: nAssets, img: nImg };
 }
 
 const hora = () => new Date().toLocaleTimeString('es-AR');
@@ -103,8 +126,9 @@ const hora = () => new Date().toLocaleTimeString('es-AR');
 /* Una corrida, capturando errores para no matar el watch. */
 function correr(silencioso) {
   try {
-    const n = construir({ silencioso });
-    console.log((silencioso ? '[' + hora() + '] ' : '\n') + n + ' paginas generadas.');
+    const r = construir({ silencioso });
+    const resumen = r.paginas + ' paginas, ' + r.assets + ' assets, ' + r.img + ' imagenes -> dist/';
+    console.log((silencioso ? '[' + hora() + '] ' : '\n') + resumen);
     return true;
   } catch (e) {
     console.error('[' + hora() + '] ERROR: ' + e.message);
@@ -118,18 +142,23 @@ if (process.argv.includes('--watch')) {
   console.log('Ctrl+C para salir.\n');
 
   let pendiente = null;
-  const alCambiar = (dir) => (_evento, archivo) => {
-    if (archivo && !archivo.endsWith('.html')) return;
+  const alCambiar = (etiqueta) => (_evento, archivo) => {
     // se agrupan los eventos: un guardado dispara varios
     clearTimeout(pendiente);
     pendiente = setTimeout(() => {
-      console.log('cambio en ' + dir + '/' + (archivo || ''));
+      console.log('cambio en ' + etiqueta + '/' + (archivo || ''));
       correr(true);
     }, 120);
   };
 
-  fs.watch(dirPartials, alCambiar('src/partials'));
-  fs.watch(dirPaginas, alCambiar('src/pages'));
+  for (const [dir, etiqueta] of [
+    [dirPartials, 'src/partials'],
+    [dirPaginas, 'src/pages'],
+    [dirAssets, 'src/assets'],
+    [dirImg, 'src/img'],
+  ]) {
+    if (fs.existsSync(dir)) fs.watch(dir, alCambiar(etiqueta));
+  }
 } else {
   if (!correr(false)) process.exit(1);
 }
