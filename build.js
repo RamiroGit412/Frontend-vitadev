@@ -68,12 +68,41 @@ function copiar(origen, nombre) {
   return fs.readdirSync(origen).length;
 }
 
+/* Envuelve el contenido en <main>, con breadcrumb y cta-band si la pagina
+   los declara. Antes cada pagina repetia esas lineas. */
+function envolverMain(contenido, campos, breadcrumb, cta) {
+  const out = ['<main id="top">'];
+
+  if (campos.breadcrumb) {
+    out.push(breadcrumb.split('{{breadcrumb}}').join(campos.breadcrumb));
+  }
+
+  out.push(contenido, '');
+
+  if (campos.cta_titulo || campos.cta_texto) {
+    if (!campos.cta_titulo || !campos.cta_texto) {
+      throw new Error('cta_titulo y cta_texto van juntos');
+    }
+    out.push(
+      cta
+        .split('{{cta_titulo}}').join(campos.cta_titulo)
+        .split('{{cta_texto}}').join(campos.cta_texto),
+      ''
+    );
+  }
+
+  out.push('</main>');
+  return out;
+}
+
 /* Genera el sitio completo en dist/. */
 function construir({ silencioso = false } = {}) {
   // se leen en cada corrida para que --watch tome los cambios
   const head = leer(dirPartials, 'head.html').trimEnd();
   const header = leer(dirPartials, 'header.html').trimEnd();
   const footer = leer(dirPartials, 'footer.html').trimEnd();
+  const breadcrumb = leer(dirPartials, 'breadcrumb.html').trimEnd();
+  const cta = leer(dirPartials, 'cta.html').trimEnd();
 
   const paginas = fs.readdirSync(dirPaginas).filter((f) => f.endsWith('.html')).sort();
   if (paginas.length === 0) throw new Error('no hay paginas en src/pages/');
@@ -104,7 +133,7 @@ function construir({ silencioso = false } = {}) {
       '</head>',
       '<body>',
       marcarActivo(header, campos.activo),
-      contenido,
+      ...envolverMain(contenido, campos, breadcrumb, cta),
       pie,
       '</body>',
       '</html>',

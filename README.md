@@ -19,6 +19,8 @@ src/
     head.html          metadatos, fuentes y link al CSS
     header.html        barra superior y menú
     footer.html        pie de página y <script>
+    breadcrumb.html    la miga de pan de las subpáginas
+    cta.html           la banda de "Hablemos de tu proyecto"
   pages/
     index.html         metadatos + contenido propio de cada página
     ...                (uno por página, 8 en total)
@@ -36,7 +38,9 @@ dist/                  sitio publicable (generado, no versionado)
 ```
 
 Cada parte del sitio está escrita **una sola vez**. El header vive únicamente
-en `src/partials/header.html`, y el build lo inserta en las 8 páginas.
+en `src/partials/header.html`, y el build lo inserta en las 8 páginas. Lo mismo
+con el `<main>`, la miga de pan y la banda de CTA: las páginas solo declaran su
+texto, no repiten el armado.
 
 ## Construir
 
@@ -49,7 +53,9 @@ node build.js --watch
 ```
 
 Queda escuchando `src/`. Guardás `header.html` y las 8 páginas se regeneran
-solas, sin correr nada a mano. Dejá la ventana abierta mientras editás.
+solas, sin correr nada a mano. Dejá la ventana abierta mientras editás, y
+cerrala al terminar: si queda un watch viejo corriendo, sigue reescribiendo
+`dist/` por atrás.
 
 **Una sola vez** (antes de publicar): doble clic en `construir.cmd`, o
 
@@ -84,15 +90,22 @@ cual.
    title: Mi página — VitaDev
    description: Descripción para Google y para las redes.
    activo: proyectos.html
+   breadcrumb: Mi página
+   cta_titulo: ¿Charlamos?
+   cta_texto: Una línea invitando a escribirnos.
    -->
    ```
 
-   `activo` es el `href` del ítem del menú que se marca como actual. Si la
-   página no está en el menú, dejalo vacío. Si el `href` no existe en
-   `src/partials/header.html`, el build falla avisando.
+   | Campo | Qué hace |
+   |---|---|
+   | `title` | obligatorio. Va al `<title>` y a las etiquetas sociales. |
+   | `description` | obligatorio. Idem, para Google y las redes. |
+   | `activo` | el `href` del ítem del menú que se marca como actual. Vacío si la página no está en el menú. Si el `href` no existe en `header.html`, el build falla avisando. |
+   | `breadcrumb` | el texto después de "Inicio /". Vacío y no se dibuja la miga de pan. |
+   | `cta_titulo` y `cta_texto` | la banda de cierre. Los dos o ninguno; si va uno solo, el build falla. |
 
-2. Debajo del encabezado va el contenido: solo lo que está entre el header y
-   el footer.
+2. Debajo del encabezado va el contenido: solo las `<section>` propias de la
+   página. El `<main>`, la miga de pan y la banda de CTA los pone el build.
 
 3. Corré el build, o dejá el watch corriendo y se genera sola.
 
