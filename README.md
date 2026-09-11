@@ -29,12 +29,22 @@ build.js           arma los .html de la raíz
 
 ## Construir
 
+No necesita `npm install`: usa solo Node, sin dependencias.
+
+**Mientras trabajás** (recomendado): doble clic en `desarrollar.cmd`, o
+
+```bash
+node build.js --watch
+```
+
+Queda escuchando `src/`. Guardás `header.html` y las 8 páginas se regeneran
+solas, sin correr nada. Dejá la ventana abierta mientras editás.
+
+**Una sola vez** (antes de publicar): doble clic en `construir.cmd`, o
+
 ```bash
 node build.js
 ```
-
-No necesita `npm install`: usa solo Node, sin dependencias. Reescribe los 8
-HTML de la raíz. Corrélo después de cada cambio en `src/` y antes de publicar.
 
 Como la salida es HTML estático plano, el sitio se sigue publicando y abriendo
 igual que siempre: no hace falta servidor ni paso de deploy nuevo.
@@ -66,7 +76,7 @@ npx serve -l 4173
 2. Debajo del encabezado va el contenido: solo lo que está entre el header y
    el footer.
 
-3. Corré `node build.js`.
+3. Corré `node build.js` (o dejá el watch corriendo y se genera sola).
 
 ## Por qué hay un build
 
